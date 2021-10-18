@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("hello")
 
-
 public class HelloController {
 
 	public String greetingsLang(String language) {
@@ -27,7 +26,22 @@ public class HelloController {
 
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String createMessage(@RequestParam String name, String language) {
-		return greetingsLang(language) + name + "!";
+		return "<html>" +
+			       "<head>" +
+			       "<style>" +
+			       "@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');" +
+			       "body {" +
+			       "font-family: 'Gochi Hand', sans-serif;font-size: 1.5rem;" +
+			       "}" +
+			       "</style>" +
+			       "</head>" +
+			       "<body>" +
+			       "<p>" +
+			       greetingsLang(language) +
+			       name + "!" +
+			       "</p>" +
+			       "<body>" +
+			       "</html>";
 	}
 
 	@GetMapping("form")
