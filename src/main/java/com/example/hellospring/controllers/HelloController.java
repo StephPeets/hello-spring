@@ -10,47 +10,39 @@ import org.springframework.web.bind.annotation.*;
 
 public class HelloController {
 
-////  Annotation for GET
-//    @GetMapping("hello") // path/hello
-////  Annotation signals plain text response
-//    @ResponseBody
-//    public String hello(){
-//        return "Hello, Spring!";
-//    }
-
-	// path/hello/goodbye (inherits /hello from annotation class method)
-	@GetMapping("goodbye")
-	public String goodbye() {
-		return "Goodbye, Spring!";
+	public String greetingsLang(String language) {
+		if (language.equalsIgnoreCase("english"))
+			return "Hello, ";
+		else if (language.equalsIgnoreCase("spanish"))
+			return "Hola, ";
+		else if (language.equalsIgnoreCase("french"))
+			return "Bonjour, ";
+		else if (language.equalsIgnoreCase("hindi"))
+			return "Namaste, ";
+		else if (language.equalsIgnoreCase("danish"))
+			return "Hej, ";
+		else
+			return "Greetings, ";
 	}
 
-	// Handles request of the form /hello?name=LaunchCode
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-	public String helloWithQueryParam(
-		@RequestParam /*@RequestParam as an argument lets the handler method
-		know about a given query string based on its own argument*/
-			String name, String friend) {
-
-		return "Hello, " + name + " & " + friend + "!";
-
+	public String createMessage(@RequestParam String name, String language) {
+		return greetingsLang(language) + name + "!";
 	}
 
-	// Handles requests of the form /hello/LaunchCode
-	@GetMapping("{name}")
-	public String helloWithPathPathParam(@PathVariable String name) {
-		return "Hello, " + name + "!";
-	}
-
-	// /hello/form (inherits /hello from class RequestMapping annotation)
 	@GetMapping("form")
 	public String helloForm() {
 		return "<html>" +
 			       "<body>" +
-			       "<form action='/hello' method='post'>" + // <- submit a request to /hello
+			       "<form action='/hello' method='post'>" +
 			       "<input type='text' name='name'>" +
-			       "<br>" +
-			       "<input type='text' name='friend'>" +
-			       "<br>" +
+			       "<select name='language' id='hello'>" +
+			       "<option value='english'>English</option>" +
+			       "<option value='spanish'>Spanish</option>" +
+			       "<option value='french'>French</option>" +
+			       "<option value='hindi'>Hindi</option>" +
+			       "<option value='danish'>Danish</option>" +
+			       "</select>" +
 			       "<input type='Submit' value ='Greet me!'>" +
 			       "</form>" +
 			       "</body>" +
